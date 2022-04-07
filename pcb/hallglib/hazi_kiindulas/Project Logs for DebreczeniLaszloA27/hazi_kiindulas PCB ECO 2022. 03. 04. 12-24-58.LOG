@@ -1,0 +1,414 @@
+Change component parameters: Designator = "U1" ("U1"); Footprint = "FP_NUCLEO-64"; UniqueID = "\OAGXDWKT" ("\OAGXDWKT")
+Change component parameters (AddParameter): Name = "Name"; Value = "Nucleo F446RE"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Reference"; Value = "NUCLEO"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier"; Value = "Tanszék"; VariantName = "[No Variations]"
+Added Component: Designator=B1(FP_BTN_SMD)
+Add component (AddParameter): Name = "Name"; Value = "4P Pushbutton"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "45-05-43"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Added Component: Designator=B2(FP_BTN_SMD)
+Add component (AddParameter): Name = "Name"; Value = "4P Pushbutton"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "45-05-43"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Added Component: Designator=C1(FP_1206_CAP_125)
+Add component (AddParameter): Name = "Name"; Value = "100nF 1206 Capacitor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "82-14-64"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "10%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "100nF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage"; Value = "50V"; VariantName = "[No Variations]"
+Added Component: Designator=C2(FP_1206_CAP_125)
+Add component (AddParameter): Name = "Name"; Value = "100nF 1206 Capacitor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "82-14-64"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "10%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "100nF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage"; Value = "50V"; VariantName = "[No Variations]"
+Added Component: Designator=C3(FP_1206_CAP_125)
+Add component (AddParameter): Name = "Name"; Value = "100nF 1206 Capacitor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "82-14-64"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "10%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "100nF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage"; Value = "50V"; VariantName = "[No Variations]"
+Added Component: Designator=C4(FP_1206_CAP_125)
+Add component (AddParameter): Name = "Name"; Value = "100nF 1206 Capacitor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "82-14-64"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "10%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "100nF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage"; Value = "50V"; VariantName = "[No Variations]"
+Added Component: Designator=C5(FP_1206_CAP_125)
+Add component (AddParameter): Name = "Name"; Value = "100nF 1206 Capacitor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "82-14-64"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "10%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "100nF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage"; Value = "50V"; VariantName = "[No Variations]"
+Added Component: Designator=D1(DIOM4426X23M)
+Add component (AddParameter): Name = "Name"; Value = "Suppressor diode"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "96-03-85"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Added Component: Designator=DS1(FP_7SEG)
+Add component (AddParameter): Name = "Colour"; Value = "High Efficiency Red (HER)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "Manufacturer Link"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "http://www.agilent.com/"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "DatasheetVersion"; Value = "19-Feb-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Dec-2003"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Schematic revised, PCB Footprint replaced."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MinimumIntensity"; Value = "360 ucd"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Name"; Value = "FYS-3911BUHR-21"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Note"; Value = "IF = 5 mA"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageDescription"; Value = "LED, 7-Segment Display, 7.62 mm, RHD; 10 Leads; Row Space 5.08 mm; Pitch 2.54 mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageReference"; Value = "A"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageVersion"; Value = "11-Feb-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "35-03-94"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Added Component: Designator=DS2(FP_7SEG)
+Add component (AddParameter): Name = "Colour"; Value = "High Efficiency Red (HER)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "Manufacturer Link"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "http://www.agilent.com/"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "DatasheetVersion"; Value = "19-Feb-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Dec-2003"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Schematic revised, PCB Footprint replaced."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MinimumIntensity"; Value = "360 ucd"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Name"; Value = "FYS-3911BUHR-21"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Note"; Value = "IF = 5 mA"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageDescription"; Value = "LED, 7-Segment Display, 7.62 mm, RHD; 10 Leads; Row Space 5.08 mm; Pitch 2.54 mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageReference"; Value = "A"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageVersion"; Value = "11-Feb-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "35-03-94"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Added Component: Designator=DS3(FP_7SEG)
+Add component (AddParameter): Name = "Colour"; Value = "High Efficiency Red (HER)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "Manufacturer Link"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "http://www.agilent.com/"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "DatasheetVersion"; Value = "19-Feb-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Dec-2003"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Schematic revised, PCB Footprint replaced."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MinimumIntensity"; Value = "360 ucd"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Name"; Value = "FYS-3911BUHR-21"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Note"; Value = "IF = 5 mA"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageDescription"; Value = "LED, 7-Segment Display, 7.62 mm, RHD; 10 Leads; Row Space 5.08 mm; Pitch 2.54 mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageReference"; Value = "A"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageVersion"; Value = "11-Feb-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "35-03-94"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Added Component: Designator=DS4(FP_7SEG)
+Add component (AddParameter): Name = "Colour"; Value = "High Efficiency Red (HER)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "Manufacturer Link"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "http://www.agilent.com/"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "DatasheetVersion"; Value = "19-Feb-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Dec-2003"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Schematic revised, PCB Footprint replaced."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MinimumIntensity"; Value = "360 ucd"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Name"; Value = "FYS-3911BUHR-21"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Note"; Value = "IF = 5 mA"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageDescription"; Value = "LED, 7-Segment Display, 7.62 mm, RHD; 10 Leads; Row Space 5.08 mm; Pitch 2.54 mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageReference"; Value = "A"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageVersion"; Value = "11-Feb-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Published"; Value = "8-Jun-2000"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "35-03-94"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Added Component: Designator=F1(FP_MULTIFUSE)
+Add component (AddParameter): Name = "Name"; Value = "SMD Fuse"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "44-04-71"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Added Component: Designator=J1(FP_DC_TAP_ANYA)
+Add component (AddParameter): Name = "Name"; Value = "TÁP DC ANYA 5.5/2.1/9.5mm DCS-5521-5"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "43-07-67"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Added Component: Designator=Q1(SOT95P240X115-3M)
+Add component (AddParameter): Name = "Name"; Value = "BC807-25"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "86-05-63"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Added Component: Designator=Q2(SOT95P240X115-3M)
+Add component (AddParameter): Name = "Name"; Value = "BC807-25"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "86-05-63"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Added Component: Designator=Q3(SOT95P240X115-3M)
+Add component (AddParameter): Name = "Name"; Value = "BC807-25"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "86-05-63"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Added Component: Designator=Q4(SOT95P240X115-3M)
+Add component (AddParameter): Name = "Name"; Value = "BC807-25"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "86-05-63"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Added Component: Designator=R1(FP_1206_RES)
+Add component (AddParameter): Name = "Name"; Value = "10K 1206 Resistor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "81-11-59"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "5%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Added Component: Designator=R2(FP_1206_RES)
+Add component (AddParameter): Name = "Name"; Value = "10K 1206 Resistor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "81-11-59"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "5%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Added Component: Designator=R3(FP_1206_RES)
+Add component (AddParameter): Name = "Name"; Value = "10K 1206 Resistor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "81-11-59"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "5%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Added Component: Designator=R4(FP_1206_RES)
+Add component (AddParameter): Name = "Name"; Value = "10K 1206 Resistor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "81-11-59"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "5%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Added Component: Designator=R5(FP_1206_RES)
+Add component (AddParameter): Name = "Name"; Value = "1K 1206 Resistor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "81-11-47"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "5%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "1K"; VariantName = "[No Variations]"
+Added Component: Designator=R6(FP_1206_RES)
+Add component (AddParameter): Name = "Name"; Value = "100K 1206 resistor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "81-11-71"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "5%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "100K"; VariantName = "[No Variations]"
+Added Component: Designator=R7(FP_1206_RES)
+Add component (AddParameter): Name = "Name"; Value = "100K 1206 resistor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "81-11-71"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "5%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "100K"; VariantName = "[No Variations]"
+Added Component: Designator=R8(FP_1206_RES)
+Add component (AddParameter): Name = "Name"; Value = "10K 1206 Resistor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "81-11-59"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "5%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Added Component: Designator=R9(FP_1206_RES)
+Add component (AddParameter): Name = "Name"; Value = "10K 1206 Resistor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "81-11-59"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "5%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "10K"; VariantName = "[No Variations]"
+Added Component: Designator=U2(SOIC127P600X175-16M)
+Add component (AddParameter): Name = "Name"; Value = "SN74HCT138DR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "87-06-49"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Added Component: Designator=U3(TSOP65P640X120-16M)
+Add component (AddParameter): Name = "Name"; Value = "STP08CP05TTR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "ST, Tanszéki forrás"; VariantName = "[No Variations]"
+Added Component: Designator=U4(FP_DIL24)
+Add component (AddParameter): Name = "Name"; Value = "MKI160V1 LSM6DS3 inertial module adapter"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "511-STEVAL-MKI160V1"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Mouser"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=+3.3V Pin=C3-2
+Added Pin To Net: NetName=+3.3V Pin=R6-2
+Added Pin To Net: NetName=+3.3V Pin=R7-2
+Added Pin To Net: NetName=+3.3V Pin=U1-16
+Added Pin To Net: NetName=+3.3V Pin=U4-1
+Added Pin To Net: NetName=+3.3V Pin=U4-2
+Added Net: Name=+3.3V
+Added Pin To Net: NetName=+5V Pin=C1-2
+Added Pin To Net: NetName=+5V Pin=C2-2
+Added Pin To Net: NetName=+5V Pin=D1-2
+Added Pin To Net: NetName=+5V Pin=F1-2
+Added Pin To Net: NetName=+5V Pin=Q1-2
+Added Pin To Net: NetName=+5V Pin=Q2-2
+Added Pin To Net: NetName=+5V Pin=Q3-2
+Added Pin To Net: NetName=+5V Pin=Q4-2
+Added Pin To Net: NetName=+5V Pin=U1-6
+Added Pin To Net: NetName=+5V Pin=U2-6
+Added Pin To Net: NetName=+5V Pin=U2-16
+Added Pin To Net: NetName=+5V Pin=U3-16
+Added Net: Name=+5V
+Added Pin To Net: NetName=D1 Pin=DS1-10
+Added Pin To Net: NetName=D1 Pin=DS2-10
+Added Pin To Net: NetName=D1 Pin=DS3-10
+Added Pin To Net: NetName=D1 Pin=DS4-10
+Added Pin To Net: NetName=D1 Pin=U3-5
+Added Net: Name=D1
+Added Pin To Net: NetName=D2 Pin=DS1-9
+Added Pin To Net: NetName=D2 Pin=DS2-9
+Added Pin To Net: NetName=D2 Pin=DS3-9
+Added Pin To Net: NetName=D2 Pin=DS4-9
+Added Pin To Net: NetName=D2 Pin=U3-6
+Added Net: Name=D2
+Added Pin To Net: NetName=D3 Pin=DS1-7
+Added Pin To Net: NetName=D3 Pin=DS2-7
+Added Pin To Net: NetName=D3 Pin=DS3-7
+Added Pin To Net: NetName=D3 Pin=DS4-7
+Added Pin To Net: NetName=D3 Pin=U3-7
+Added Net: Name=D3
+Added Pin To Net: NetName=D4 Pin=DS1-5
+Added Pin To Net: NetName=D4 Pin=DS2-5
+Added Pin To Net: NetName=D4 Pin=DS3-5
+Added Pin To Net: NetName=D4 Pin=DS4-5
+Added Pin To Net: NetName=D4 Pin=U3-8
+Added Net: Name=D4
+Added Pin To Net: NetName=D5 Pin=DS1-4
+Added Pin To Net: NetName=D5 Pin=DS2-4
+Added Pin To Net: NetName=D5 Pin=DS3-4
+Added Pin To Net: NetName=D5 Pin=DS4-4
+Added Pin To Net: NetName=D5 Pin=U3-9
+Added Net: Name=D5
+Added Pin To Net: NetName=D6 Pin=DS1-2
+Added Pin To Net: NetName=D6 Pin=DS2-2
+Added Pin To Net: NetName=D6 Pin=DS3-2
+Added Pin To Net: NetName=D6 Pin=DS4-2
+Added Pin To Net: NetName=D6 Pin=U3-10
+Added Net: Name=D6
+Added Pin To Net: NetName=D7 Pin=DS1-1
+Added Pin To Net: NetName=D7 Pin=DS2-1
+Added Pin To Net: NetName=D7 Pin=DS3-1
+Added Pin To Net: NetName=D7 Pin=DS4-1
+Added Pin To Net: NetName=D7 Pin=U3-11
+Added Net: Name=D7
+Added Pin To Net: NetName=D8 Pin=DS1-6
+Added Pin To Net: NetName=D8 Pin=DS2-6
+Added Pin To Net: NetName=D8 Pin=DS3-6
+Added Pin To Net: NetName=D8 Pin=DS4-6
+Added Pin To Net: NetName=D8 Pin=U3-12
+Added Net: Name=D8
+Added Pin To Net: NetName=GND Pin=B1-1
+Added Pin To Net: NetName=GND Pin=B1-2
+Added Pin To Net: NetName=GND Pin=B2-1
+Added Pin To Net: NetName=GND Pin=B2-2
+Added Pin To Net: NetName=GND Pin=C1-1
+Added Pin To Net: NetName=GND Pin=C2-1
+Added Pin To Net: NetName=GND Pin=C3-1
+Added Pin To Net: NetName=GND Pin=C4-1
+Added Pin To Net: NetName=GND Pin=C5-1
+Added Pin To Net: NetName=GND Pin=D1-1
+Added Pin To Net: NetName=GND Pin=J1-2
+Added Pin To Net: NetName=GND Pin=J1-3
+Added Pin To Net: NetName=GND Pin=R5-1
+Added Pin To Net: NetName=GND Pin=U1-8
+Added Pin To Net: NetName=GND Pin=U1-19
+Added Pin To Net: NetName=GND Pin=U1-20
+Added Pin To Net: NetName=GND Pin=U1-22
+Added Pin To Net: NetName=GND Pin=U1-47
+Added Pin To Net: NetName=GND Pin=U1-58
+Added Pin To Net: NetName=GND Pin=U2-3
+Added Pin To Net: NetName=GND Pin=U2-4
+Added Pin To Net: NetName=GND Pin=U2-5
+Added Pin To Net: NetName=GND Pin=U2-8
+Added Pin To Net: NetName=GND Pin=U3-1
+Added Pin To Net: NetName=GND Pin=U3-13
+Added Pin To Net: NetName=GND Pin=U4-4
+Added Pin To Net: NetName=GND Pin=U4-5
+Added Pin To Net: NetName=GND Pin=U4-13
+Added Pin To Net: NetName=GND Pin=U4-19
+Added Net: Name=GND
+Added Pin To Net: NetName=NetB1_3 Pin=B1-3
+Added Pin To Net: NetName=NetB1_3 Pin=B1-4
+Added Pin To Net: NetName=NetB1_3 Pin=R6-1
+Added Pin To Net: NetName=NetB1_3 Pin=R8-1
+Added Net: Name=NetB1_3
+Added Pin To Net: NetName=NetB2_3 Pin=B2-3
+Added Pin To Net: NetName=NetB2_3 Pin=B2-4
+Added Pin To Net: NetName=NetB2_3 Pin=R7-1
+Added Pin To Net: NetName=NetB2_3 Pin=R9-1
+Added Net: Name=NetB2_3
+Added Pin To Net: NetName=NetC4_2 Pin=C4-2
+Added Pin To Net: NetName=NetC4_2 Pin=R8-2
+Added Pin To Net: NetName=NetC4_2 Pin=U1-51
+Added Net: Name=NetC4_2
+Added Pin To Net: NetName=NetC5_2 Pin=C5-2
+Added Pin To Net: NetName=NetC5_2 Pin=R9-2
+Added Pin To Net: NetName=NetC5_2 Pin=U1-53
+Added Net: Name=NetC5_2
+Added Pin To Net: NetName=NetDS1_3 Pin=DS1-3
+Added Pin To Net: NetName=NetDS1_3 Pin=DS1-8
+Added Pin To Net: NetName=NetDS1_3 Pin=Q1-3
+Added Net: Name=NetDS1_3
+Added Pin To Net: NetName=NetDS2_3 Pin=DS2-3
+Added Pin To Net: NetName=NetDS2_3 Pin=DS2-8
+Added Pin To Net: NetName=NetDS2_3 Pin=Q2-3
+Added Net: Name=NetDS2_3
+Added Pin To Net: NetName=NetDS3_3 Pin=DS3-3
+Added Pin To Net: NetName=NetDS3_3 Pin=DS3-8
+Added Pin To Net: NetName=NetDS3_3 Pin=Q3-3
+Added Net: Name=NetDS3_3
+Added Pin To Net: NetName=NetDS4_3 Pin=DS4-3
+Added Pin To Net: NetName=NetDS4_3 Pin=DS4-8
+Added Pin To Net: NetName=NetDS4_3 Pin=Q4-3
+Added Net: Name=NetDS4_3
+Added Pin To Net: NetName=NetF1_1 Pin=F1-1
+Added Pin To Net: NetName=NetF1_1 Pin=J1-1
+Added Net: Name=NetF1_1
+Added Pin To Net: NetName=NetQ1_1 Pin=Q1-1
+Added Pin To Net: NetName=NetQ1_1 Pin=R1-2
+Added Net: Name=NetQ1_1
+Added Pin To Net: NetName=NetQ2_1 Pin=Q2-1
+Added Pin To Net: NetName=NetQ2_1 Pin=R2-2
+Added Net: Name=NetQ2_1
+Added Pin To Net: NetName=NetQ3_1 Pin=Q3-1
+Added Pin To Net: NetName=NetQ3_1 Pin=R3-2
+Added Net: Name=NetQ3_1
+Added Pin To Net: NetName=NetQ4_1 Pin=Q4-1
+Added Pin To Net: NetName=NetQ4_1 Pin=R4-2
+Added Net: Name=NetQ4_1
+Added Pin To Net: NetName=NetR1_1 Pin=R1-1
+Added Pin To Net: NetName=NetR1_1 Pin=U2-15
+Added Net: Name=NetR1_1
+Added Pin To Net: NetName=NetR2_1 Pin=R2-1
+Added Pin To Net: NetName=NetR2_1 Pin=U2-14
+Added Net: Name=NetR2_1
+Added Pin To Net: NetName=NetR3_1 Pin=R3-1
+Added Pin To Net: NetName=NetR3_1 Pin=U2-13
+Added Net: Name=NetR3_1
+Added Pin To Net: NetName=NetR4_1 Pin=R4-1
+Added Pin To Net: NetName=NetR4_1 Pin=U2-12
+Added Net: Name=NetR4_1
+Added Pin To Net: NetName=NetR5_2 Pin=R5-2
+Added Pin To Net: NetName=NetR5_2 Pin=U3-15
+Added Net: Name=NetR5_2
+Added Pin To Net: NetName=NetU1_1 Pin=U1-1
+Added Pin To Net: NetName=NetU1_1 Pin=U4-20
+Added Net: Name=NetU1_1
+Added Pin To Net: NetName=NetU1_2 Pin=U1-2
+Added Pin To Net: NetName=NetU1_2 Pin=U4-22
+Added Net: Name=NetU1_2
+Added Pin To Net: NetName=NetU1_34 Pin=U1-34
+Added Pin To Net: NetName=NetU1_34 Pin=U4-21
+Added Net: Name=NetU1_34
+Added Pin To Net: NetName=NetU1_36 Pin=U1-36
+Added Pin To Net: NetName=NetU1_36 Pin=U3-2
+Added Net: Name=NetU1_36
+Added Pin To Net: NetName=NetU1_50 Pin=U1-50
+Added Pin To Net: NetName=NetU1_50 Pin=U2-2
+Added Net: Name=NetU1_50
+Added Pin To Net: NetName=NetU1_52 Pin=U1-52
+Added Pin To Net: NetName=NetU1_52 Pin=U2-1
+Added Net: Name=NetU1_52
+Added Pin To Net: NetName=NetU1_59 Pin=U1-59
+Added Pin To Net: NetName=NetU1_59 Pin=U4-15
+Added Net: Name=NetU1_59
+Added Pin To Net: NetName=NetU1_61 Pin=U1-61
+Added Pin To Net: NetName=NetU1_61 Pin=U4-14
+Added Net: Name=NetU1_61
+Added Pin To Net: NetName=NetU1_63 Pin=U1-63
+Added Pin To Net: NetName=NetU1_63 Pin=U3-3
+Added Net: Name=NetU1_63
+Added Pin To Net: NetName=NetU1_71 Pin=U1-71
+Added Pin To Net: NetName=NetU1_71 Pin=U3-4
+Added Net: Name=NetU1_71
+Added Class: Name=7segment
+Added Class: Name=Acceleration_module
+Added Class: Name=Power
+Added Class: Name=Pushbuttons

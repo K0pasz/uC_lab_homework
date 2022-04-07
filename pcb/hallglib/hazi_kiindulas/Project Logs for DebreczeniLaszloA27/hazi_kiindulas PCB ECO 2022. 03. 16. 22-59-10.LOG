@@ -1,0 +1,28 @@
+Removed Pin From Net: NetName=GND Pin=U3-13
+Removed Pin From Net: NetName=GND Pin=U4-19
+Added Component: Designator=D2(FP_0805_LED_RED)
+Add component (AddParameter): Name = "I_max"; Value = "30 mA"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Name"; Value = "Green LED"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "95-02-77"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "U_fw"; Value = "5 V"; VariantName = "[No Variations]"
+Added Component: Designator=R10(FP_1206_RES)
+Add component (AddParameter): Name = "Name"; Value = "1206 Resistor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Power"; Value = "0.25W"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reference"; Value = "81-12-04"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Lomex"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "5%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "510R"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=D2-K
+Added Pin To Net: NetName=+5V Pin=R10-2
+Added Pin To Net: NetName=NetD2_1 Pin=R10-1
+Added Pin To Net: NetName=NetD2_1 Pin=D2-A
+Added Net: Name=NetD2_1
+Added Pin To Net: NetName=NetU1_39 Pin=U1-39
+Added Pin To Net: NetName=NetU1_39 Pin=U3-13
+Added Net: Name=NetU1_39
+Added Pin To Net: NetName=NetU1_40 Pin=U1-40
+Added Pin To Net: NetName=NetU1_40 Pin=U4-19
+Added Net: Name=NetU1_40
+Added Member To Class: ClassName=Power Member=Component D2 LED
+Added Member To Class: ClassName=Power Member=Component R10 510R

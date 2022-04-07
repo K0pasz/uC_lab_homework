@@ -1,0 +1,53 @@
+[33mcommit ddbcf23b7cb2af818ec1d605d28c6c76cec3ace8[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Laszlo Debreczeni <deblaci10@gmail.com>
+Date:   Fri Feb 25 15:46:52 2022 +0100
+
+    Added the acceleration module schematic (half-finished, have questions) and the pushbuttons schematic (added the CD4044BE RS flip-flop, have to add the PCB footprint for it)
+
+[33mcommit 3025453df3663ea1d2c88f9d368bd45eed0933d7[m
+Author: Laszlo Debreczeni <deblaci10@gmail.com>
+Date:   Fri Feb 25 13:37:09 2022 +0100
+
+    Connected the Nucleo's pins to the 7 segment display shift register and decoder and made the power input schematic (added a suppressor diode too)
+
+[33mcommit d65d3601b6f2e2e578eda4426e72057d31700958[m
+Author: Laszlo Debreczeni <deblaci10@gmail.com>
+Date:   Thu Feb 24 22:35:10 2022 +0100
+
+    Almost done with the 7 segment schematic (have to figure out what pins of the Nucleo should I connect to the unconnected pins here)
+
+[33mcommit 2ab984a57d0ba289863874c2b9b5c785e9ed3a3a[m
+Author: Laszlo Debreczeni <deblaci10@gmail.com>
+Date:   Thu Feb 24 13:03:16 2022 +0100
+
+    Added the shift register for the 7 segment displays and connected the displays with the decoder
+
+[33mcommit 14331f98a1b5483d4eabcaa57b079ff2cd2eb2df[m
+Author: Laszlo Debreczeni <deblaci10@gmail.com>
+Date:   Tue Feb 22 13:02:27 2022 +0100
+
+    Added the BC807-25 General-purpose PNP transistor to the library
+
+[33mcommit a0b1b9cdbd98cff060227c9184e2af08c40e9e0b[m
+Author: Laszlo Debreczeni <deblaci10@gmail.com>
+Date:   Tue Feb 22 00:28:47 2022 +0100
+
+    Added the D flip-flop and the footprint for it
+
+[33mcommit b715f61eb263f7beb22af3eba735a4e8c8f65c41[m
+Author: Laszlo Debreczeni <deblaci10@gmail.com>
+Date:   Mon Feb 21 20:01:21 2022 +0100
+
+    Added the 74HCT138D decoder and made the footprint for it
+
+[33mcommit d9990a0e9f289a1e584d50d944034eaec83fb45a[m
+Author: Laszlo Debreczeni <deblaci10@gmail.com>
+Date:   Mon Feb 21 18:34:51 2022 +0100
+
+    Renamed the project file
+
+[33mcommit 394b2cfb4becf32a6de4e7613c3d07296e1f4cbf[m
+Author: Laszlo Debreczeni <deblaci10@gmail.com>
+Date:   Mon Feb 21 18:32:32 2022 +0100
+
+    Just downloaded the starting project files for the homework

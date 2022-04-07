@@ -1,0 +1,12 @@
+Output: NC Drill Files
+Type  : NC Drill
+From  : PCB Document [hazi_kiindulas.PcbDoc]
+   Generated File[DebreczeniLaszloA27.TXT]
+   Generated File[DebreczeniLaszloA27.LDP]
+   Generated File[DebreczeniLaszloA27.DRR]
+
+
+Files Generated   : 3
+Documents Printed : 0
+
+Finished Output Generation At 11:40:01 On 2022. 03. 19.
