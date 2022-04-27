@@ -35,16 +35,93 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
+const uint8_t digit0 = 0x3F;
+const uint8_t digit1 = 0x06;
+const uint8_t digit2 = 0x5B;
+const uint8_t digit3 = 0x4F;
+const uint8_t digit4 = 0x66;
+const uint8_t digit5 = 0x6D;
+const uint8_t digit6 = 0x7D;
+const uint8_t digit7 = 0x07;
+const uint8_t digit8 = 0x7F;
+const uint8_t digit9 = 0x6F;
+const uint8_t dummydigit = 0x00;
+int digitindex0 = 0;
+int digitindex1 = 0;
+int digitindex2 = 0;
+int digitindex3 = 0;
 
+uint8_t display0[11] = {digit0, digit1, digit2, digit3, digit4, digit5, digit6, digit7, digit8, digit9, dummydigit};
+uint8_t display1[10] = {digit0, digit1, digit2, digit3, digit4, digit5, digit6, digit7, digit8, digit9};
+uint8_t display2[10] = {digit0, digit1, digit2, digit3, digit4, digit5, digit6, digit7, digit8, digit9};
+uint8_t display3[10] = {digit0, digit1, digit2, digit3, digit4, digit5, digit6, digit7, digit8, digit9};
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-SPI_HandleTypeDef hspi2;
+ SPI_HandleTypeDef hspi2;
 SPI_HandleTypeDef hspi3;
+
+TIM_HandleTypeDef htim10;
+TIM_HandleTypeDef htim11;
 
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
+
+GPIO_PinState is7segsel0 = GPIO_PIN_RESET;
+GPIO_PinState is7segsel1 = GPIO_PIN_RESET;
+
+
+//is7segsel0 = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_11);
+//is7segsel1 = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_12);
+void Write7segsel(GPIO_PinState sel1, GPIO_PinState sel0)
+{
+	if(sel0 == GPIO_PIN_SET)
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET);
+	else
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
+
+	if(sel1 == GPIO_PIN_SET)
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET);
+	else
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET);
+}
+
+uint8_t sensorINT1_CTRLAddress = 0x0D;
+uint8_t sensorINT1_CTRLData = 0x80;
+
+uint8_t sensorTAPCFGAddress = 0x58;
+uint8_t sensorTAPCFGData = 0x40;
+
+uint8_t sensorCTRL10_CAddress = 0x19;
+uint8_t sensorCTRL10_CData = 0x3C;
+
+uint8_t sensorCTRL1_XLAddress = 0x10;
+uint8_t sensorCTRL1_XLData = 0x20;
+
+
+void SensorInit()
+{
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
+	HAL_SPI_Transmit(&hspi3, &sensorCTRL1_XLAddress, 1, 0);
+	HAL_SPI_Transmit(&hspi3, &sensorCTRL1_XLData, 1, 0);
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
+
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
+	HAL_SPI_Transmit(&hspi3, &sensorCTRL10_CAddress, 1, 0);
+	HAL_SPI_Transmit(&hspi3, &sensorCTRL10_CData, 1, 0);
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
+
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
+	HAL_SPI_Transmit(&hspi3, &sensorTAPCFGAddress, 1, 0);
+	HAL_SPI_Transmit(&hspi3, &sensorTAPCFGData, 1, 0);
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
+
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
+	HAL_SPI_Transmit(&hspi3, &sensorINT1_CTRLAddress, 1, 0);
+	HAL_SPI_Transmit(&hspi3, &sensorINT1_CTRLData, 1, 0);
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
+}
 
 /* USER CODE END PV */
 
@@ -54,13 +131,14 @@ static void MX_GPIO_Init(void);
 static void MX_SPI2_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_SPI3_Init(void);
+static void MX_TIM10_Init(void);
+static void MX_TIM11_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
 /* USER CODE END 0 */
 
 /**
@@ -94,7 +172,20 @@ int main(void)
   MX_SPI2_Init();
   MX_USART2_UART_Init();
   MX_SPI3_Init();
+  MX_TIM10_Init();
+  MX_TIM11_Init();
   /* USER CODE BEGIN 2 */
+  HAL_TIM_Base_Start_IT(&htim10);
+  HAL_TIM_Base_Start_IT(&htim11);
+
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
+  SensorInit();
+
+  //LE engedelyezes
+ 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+
+ 		  //OE engedelyezes
+ 		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_RESET);
 
   /* USER CODE END 2 */
 
@@ -102,6 +193,32 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
+	  //PA12 (7sel1) test
+	  //HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_12);
+
+	  //PA11 (7sel0) test
+	  //HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_11);
+
+	  //PA10 (shr_le) test
+	  //HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_10);
+
+	  //PC9 (shr_oe) test
+	  //HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_9);
+
+	  //gomb teszt PA6-PA7
+
+
+
+	  //kijelzo teszt
+
+
+
+		 // if(!HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7))
+		 	  {
+
+	  }
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -122,6 +239,7 @@ void SystemClock_Config(void)
   */
   __HAL_RCC_PWR_CLK_ENABLE();
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
+
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
@@ -139,6 +257,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
   /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
@@ -215,7 +334,7 @@ static void MX_SPI3_Init(void)
   hspi3.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi3.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi3.Init.NSS = SPI_NSS_SOFT;
-  hspi3.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+  hspi3.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
   hspi3.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi3.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi3.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -227,6 +346,68 @@ static void MX_SPI3_Init(void)
   /* USER CODE BEGIN SPI3_Init 2 */
 
   /* USER CODE END SPI3_Init 2 */
+
+}
+
+/**
+  * @brief TIM10 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM10_Init(void)
+{
+
+  /* USER CODE BEGIN TIM10_Init 0 */
+
+  /* USER CODE END TIM10_Init 0 */
+
+  /* USER CODE BEGIN TIM10_Init 1 */
+
+  /* USER CODE END TIM10_Init 1 */
+  htim10.Instance = TIM10;
+  htim10.Init.Prescaler = 8000 - 1;
+  htim10.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim10.Init.Period = 10 - 1;
+  htim10.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim10.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim10) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM10_Init 2 */
+
+  /* USER CODE END TIM10_Init 2 */
+
+}
+
+/**
+  * @brief TIM11 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM11_Init(void)
+{
+
+  /* USER CODE BEGIN TIM11_Init 0 */
+
+  /* USER CODE END TIM11_Init 0 */
+
+  /* USER CODE BEGIN TIM11_Init 1 */
+
+  /* USER CODE END TIM11_Init 1 */
+  htim11.Instance = TIM11;
+  htim11.Init.Prescaler = 8000 - 1;
+  htim11.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim11.Init.Period = 10000 - 1;
+  htim11.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim11.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim11) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM11_Init 2 */
+
+  /* USER CODE END TIM11_Init 2 */
 
 }
 
@@ -297,17 +478,11 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PA6 PA7 PA8 PA9 */
-  GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9;
+  /*Configure GPIO pins : PA6 PA7 PA9 */
+  GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_9;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PC7 */
-  GPIO_InitStruct.Pin = GPIO_PIN_7;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PC8 PC9 */
   GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9;
@@ -316,16 +491,104 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PB6 */
-  GPIO_InitStruct.Pin = GPIO_PIN_6;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  /*Configure GPIO pin : PA8 */
+  GPIO_InitStruct.Pin = GPIO_PIN_8;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	if(htim == &htim10)
+	{
+		if(is7segsel1 == GPIO_PIN_RESET && is7segsel0 == GPIO_PIN_RESET)
+			{
+				Write7segsel(GPIO_PIN_RESET, GPIO_PIN_SET);
 
+				HAL_SPI_Transmit(&hspi2, &display2[digitindex2], 1, 0);
+			}
+
+			if(is7segsel1 == GPIO_PIN_RESET && is7segsel0 == GPIO_PIN_SET)
+			{
+				Write7segsel(GPIO_PIN_SET, GPIO_PIN_RESET);
+
+				HAL_SPI_Transmit(&hspi2, &display1[digitindex1], 1, 0);
+			}
+
+			if(is7segsel1 == GPIO_PIN_SET && is7segsel0 == GPIO_PIN_RESET)
+			{
+				Write7segsel(GPIO_PIN_SET, GPIO_PIN_SET);
+
+				HAL_SPI_Transmit(&hspi2, &display0[digitindex0], 1, 0);
+			}
+
+			if(is7segsel1 == GPIO_PIN_SET && is7segsel0 == GPIO_PIN_SET)
+			{
+				Write7segsel(GPIO_PIN_RESET, GPIO_PIN_RESET);
+
+				HAL_SPI_Transmit(&hspi2, &display3[digitindex3], 1, 0);
+			}
+
+
+			is7segsel0 = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_11);
+			is7segsel1 = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_12);
+		//LED villogtatás
+		//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+		if(digitindex0 == 10)
+		{
+			digitindex0 = 0;
+
+			if(digitindex1 != 9)
+			{
+				digitindex1++;
+			}
+			else
+			{
+				digitindex1 = 0;
+
+				if(digitindex2 != 9)
+				{
+					digitindex2++;
+				}
+				else
+				{
+					digitindex2 = 0;
+
+					if(digitindex3 != 9)
+					{
+						digitindex3++;
+					}
+					else
+					{
+						digitindex0 = 0;
+						digitindex1 = 0;
+						digitindex2 = 0;
+						digitindex3 = 0;
+					}
+				}
+			}
+		}
+	}
+
+/*	if(htim == &htim11)
+		{
+			digitindex0++;
+		}
+		*/
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	if(GPIO_Pin == GPIO_PIN_8)
+	{
+		//LED villogtatás
+		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+		digitindex0++;
+	}
+}
 /* USER CODE END 4 */
 
 /**
@@ -359,4 +622,3 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-
