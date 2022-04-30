@@ -50,6 +50,10 @@ int digitindex0 = 0;
 int digitindex1 = 0;
 int digitindex2 = 0;
 int digitindex3 = 0;
+uint16_t steptimes [9999];
+uint16_t steptimesindex = 0;
+uint8_t steptimesL [9999];
+uint8_t steptimesH [9999];
 
 uint8_t display0[11] = {digit0, digit1, digit2, digit3, digit4, digit5, digit6, digit7, digit8, digit9, dummydigit};
 uint8_t display1[10] = {digit0, digit1, digit2, digit3, digit4, digit5, digit6, digit7, digit8, digit9};
@@ -98,6 +102,9 @@ uint8_t sensorCTRL10_CData = 0x3C;
 
 uint8_t sensorCTRL1_XLAddress = 0x10;
 uint8_t sensorCTRL1_XLData = 0x20;
+
+uint8_t sensorSTEP_TIMESTAMP_LAddress = 0xC9;
+uint8_t sensorSTEP_TIMESTAMP_HAddress = 0xCA;
 
 
 void SensorInit()
@@ -176,7 +183,7 @@ int main(void)
   MX_TIM11_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim10);
-  HAL_TIM_Base_Start_IT(&htim11);
+  //HAL_TIM_Base_Start_IT(&htim11);
 
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
   SensorInit();
@@ -193,31 +200,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
-	  //PA12 (7sel1) test
-	  //HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_12);
-
-	  //PA11 (7sel0) test
-	  //HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_11);
-
-	  //PA10 (shr_le) test
-	  //HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_10);
-
-	  //PC9 (shr_oe) test
-	  //HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_9);
-
-	  //gomb teszt PA6-PA7
-
-
-
-	  //kijelzo teszt
-
-
-
-		 // if(!HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_7))
-		 	  {
-
-	  }
 
     /* USER CODE END WHILE */
 
@@ -478,9 +460,15 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PA6 PA7 PA9 */
-  GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_9;
+  /*Configure GPIO pins : PA6 PA9 */
+  GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_9;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PA7 */
+  GPIO_InitStruct.Pin = GPIO_PIN_7;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
@@ -496,6 +484,10 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
 }
 
@@ -573,20 +565,43 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		}
 	}
 
-/*	if(htim == &htim11)
+	if(htim == &htim11)
 		{
 			digitindex0++;
 		}
-		*/
+
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	if(GPIO_Pin == GPIO_PIN_8)
 	{
-		//LED villogtatás
-		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+		//increasing the step counter
 		digitindex0++;
+
+		//getting the timestamp of the step from the sensor
+		//first we get the lower byte of the timestamp
+		//we have to tell the sensor that we want to read the STEP_TIMESTAMP_L (49h) register
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
+		HAL_SPI_Transmit(&hspi3, &sensorSTEP_TIMESTAMP_LAddress, 1, 0);
+		HAL_SPI_Receive(&hspi3, &steptimesL[steptimesindex], 1, 0);
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
+
+		//then we get the higher byte just the same as previously
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
+		HAL_SPI_Transmit(&hspi3, &sensorSTEP_TIMESTAMP_LAddress, 1, 0);
+		HAL_SPI_Receive(&hspi3, &steptimesH[steptimesindex], 1, 0);
+		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
+
+		steptimesindex++;
+	}
+
+	if(GPIO_Pin == GPIO_PIN_7)
+	{
+		digitindex0 = 0;
+		digitindex1 = 0;
+		digitindex2 = 0;
+		digitindex3 = 0;
 	}
 }
 /* USER CODE END 4 */
