@@ -21,7 +21,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <string.h>
+#include<stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -52,8 +53,15 @@ int digitindex2 = 0;
 int digitindex3 = 0;
 uint16_t steptimes [9999];
 uint16_t steptimesindex = 0;
-uint8_t steptimesL [9999];
-uint8_t steptimesH [9999];
+//uint8_t steptimesL [9999];
+//uint8_t steptimesH [9999];
+
+uint16_t time = 0;
+
+char timestampstr[16];
+
+//uint8_t CR = 13; //carriage return ascii code
+//uint8_t NL = 10; //new line ascii code
 
 uint8_t display0[11] = {digit0, digit1, digit2, digit3, digit4, digit5, digit6, digit7, digit8, digit9, dummydigit};
 uint8_t display1[10] = {digit0, digit1, digit2, digit3, digit4, digit5, digit6, digit7, digit8, digit9};
@@ -95,7 +103,7 @@ uint8_t sensorINT1_CTRLAddress = 0x0D;
 uint8_t sensorINT1_CTRLData = 0x80;
 
 uint8_t sensorTAPCFGAddress = 0x58;
-uint8_t sensorTAPCFGData = 0x40;
+uint8_t sensorTAPCFGData = 0xC0;
 
 uint8_t sensorCTRL10_CAddress = 0x19;
 uint8_t sensorCTRL10_CData = 0x3C;
@@ -106,28 +114,45 @@ uint8_t sensorCTRL1_XLData = 0x20;
 uint8_t sensorSTEP_TIMESTAMP_LAddress = 0xC9;
 uint8_t sensorSTEP_TIMESTAMP_HAddress = 0xCA;
 
+uint8_t sensorSTEP_COUNT_DELTAAddress = 0x15;
+uint8_t sensorSTEP_COUNT_DELTAData = 0xFF;
+
+uint8_t sensorINT2_CTRLAddress = 0x0E;
+uint8_t sensorINT2_CTRLData = 0x80;
 
 void SensorInit()
 {
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-	HAL_SPI_Transmit(&hspi3, &sensorCTRL1_XLAddress, 1, 0);
-	HAL_SPI_Transmit(&hspi3, &sensorCTRL1_XLData, 1, 0);
+	HAL_SPI_Transmit(&hspi3, &sensorCTRL1_XLAddress, 1, -1);
+	HAL_SPI_Transmit(&hspi3, &sensorCTRL1_XLData, 1, -1);
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-	HAL_SPI_Transmit(&hspi3, &sensorCTRL10_CAddress, 1, 0);
-	HAL_SPI_Transmit(&hspi3, &sensorCTRL10_CData, 1, 0);
+	HAL_SPI_Transmit(&hspi3, &sensorCTRL10_CAddress, 1, -1);
+	HAL_SPI_Transmit(&hspi3, &sensorCTRL10_CData, 1, -1);
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-	HAL_SPI_Transmit(&hspi3, &sensorTAPCFGAddress, 1, 0);
-	HAL_SPI_Transmit(&hspi3, &sensorTAPCFGData, 1, 0);
+	HAL_SPI_Transmit(&hspi3, &sensorTAPCFGAddress, 1, -1);
+	HAL_SPI_Transmit(&hspi3, &sensorTAPCFGData, 1, -1);
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-	HAL_SPI_Transmit(&hspi3, &sensorINT1_CTRLAddress, 1, 0);
-	HAL_SPI_Transmit(&hspi3, &sensorINT1_CTRLData, 1, 0);
+	HAL_SPI_Transmit(&hspi3, &sensorINT1_CTRLAddress, 1, -1);
+	HAL_SPI_Transmit(&hspi3, &sensorINT1_CTRLData, 1, -1);
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
+
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
+	HAL_SPI_Transmit(&hspi3, &sensorSTEP_COUNT_DELTAAddress, 1, -1);
+	HAL_SPI_Transmit(&hspi3, &sensorSTEP_COUNT_DELTAData, 1, -1);
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
+
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
+	HAL_SPI_Transmit(&hspi3, &sensorINT2_CTRLAddress, 1, -1);
+	HAL_SPI_Transmit(&hspi3, &sensorINT2_CTRLData, 1, -1);
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
+
+
 }
 
 /* USER CODE END PV */
@@ -183,7 +208,7 @@ int main(void)
   MX_TIM11_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim10);
-  //HAL_TIM_Base_Start_IT(&htim11);
+  HAL_TIM_Base_Start_IT(&htim11);
 
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
   SensorInit();
@@ -460,8 +485,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PA6 PA9 */
-  GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_9;
+  /*Configure GPIO pin : PA6 */
+  GPIO_InitStruct.Pin = GPIO_PIN_6;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -479,8 +504,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PA8 */
-  GPIO_InitStruct.Pin = GPIO_PIN_8;
+  /*Configure GPIO pins : PA8 PA9 */
+  GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -567,32 +592,59 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 	if(htim == &htim11)
 		{
-			digitindex0++;
+			time++;
 		}
 
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-	if(GPIO_Pin == GPIO_PIN_8)
+	if(GPIO_Pin == GPIO_PIN_9)
 	{
 		//increasing the step counter
 		digitindex0++;
 
-		//getting the timestamp of the step from the sensor
-		//first we get the lower byte of the timestamp
-		//we have to tell the sensor that we want to read the STEP_TIMESTAMP_L (49h) register
-		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-		HAL_SPI_Transmit(&hspi3, &sensorSTEP_TIMESTAMP_LAddress, 1, 0);
-		HAL_SPI_Receive(&hspi3, &steptimesL[steptimesindex], 1, 0);
-		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
+		steptimes[steptimesindex] = time;
 
-		//then we get the higher byte just the same as previously
-		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-		HAL_SPI_Transmit(&hspi3, &sensorSTEP_TIMESTAMP_LAddress, 1, 0);
-		HAL_SPI_Receive(&hspi3, &steptimesH[steptimesindex], 1, 0);
-		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
 
+	//getting the timestamp of the step from the sensor
+	//in the timestamp register 1 LSB means 6.4 ms
+	//first we get the lower byte of the timestamp
+	//we have to tell the sensor that we want to read the STEP_TIMESTAMP_L (49h) register
+		//HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
+		//HAL_SPI_Transmit(&hspi3, &sensorSTEP_TIMESTAMP_LAddress, 1, 0);
+		//HAL_SPI_Receive(&hspi3, &steptimesL[steptimesindex], 1, 0);
+		//HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
+
+	//then we get the higher byte just the same as previously
+		//HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
+		//HAL_SPI_Transmit(&hspi3, &sensorSTEP_TIMESTAMP_HAddress, 1, 0);
+		//HAL_SPI_Receive(&hspi3, &steptimesH[steptimesindex], 1, 0);
+		//HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
+
+	//now we put the lower and higher byte into one 16 byte variable
+		//steptimes[steptimesindex] = steptimesL[steptimesindex];
+		//uint16_t temptimeL = steptimesL[steptimesindex] | 0x0000;
+		//uint16_t temptimeH = steptimesH[steptimesindex] << 8;
+		//steptimes[steptimesindex] = temptimeH | temptimeL;
+
+	//and at last, we multiply the number with 6.4 because 1 LSB means 6.4 ms
+		//steptimes[steptimesindex] = (6 * steptimes[steptimesindex]) / 1000;
+		//steptimes[steptimesindex] = 6 * steptimes[steptimesindex];
+
+		//usarttemp = steptimes[steptimesindex] / 1000;
+
+		//test after some calculations bases on experiments
+		//steptimes[steptimesindex] = (steptimes[steptimesindex]) / 9;
+
+		sprintf(timestampstr, "%d\r\n", time);
+
+
+		HAL_UART_Transmit(&huart2, (uint8_t*) timestampstr, strlen(timestampstr), -1);
+		//HAL_UART_Transmit(&huart2, &CR, 1, 0); //carriage return on the terminal
+		//HAL_UART_Transmit(&huart2, &NL, 1, 0); //new line on the terminal
+
+		//of course we have to increment the index
 		steptimesindex++;
 	}
 

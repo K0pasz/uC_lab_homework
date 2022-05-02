@@ -1,4 +1,4 @@
-DRC Rules Export File for PCB: C:\Users\László\OneDrive\BME\semester6\mikrokontroller_labor\hf\hallglib\hazi_kiindulas\hazi_kiindulas.PcbDoc
+DRC Rules Export File for PCB: E:\uclab_hf\pcb\hallglib\hazi_kiindulas\hazi_kiindulas.PcbDoc
 RuleKind=ShortCircuit|RuleName=ShortCircuit|Scope=Board|Allowed=0
 RuleKind=Clearance|RuleName=Clearance|Scope=Board|Minimum=10.00
 RuleKind=Width|RuleName=Width|Scope=Board|Minimum=10.00
