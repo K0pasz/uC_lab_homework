@@ -18,11 +18,15 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "spi.h"
+#include "tim.h"
+#include "usart.h"
+#include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <string.h>
-#include<stdio.h>
+#include "7seg.h"
+#include "sensor.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -53,15 +57,10 @@ int digitindex2 = 0;
 int digitindex3 = 0;
 uint16_t steptimes [9999];
 uint16_t steptimesindex = 0;
-//uint8_t steptimesL [9999];
-//uint8_t steptimesH [9999];
 
 uint16_t time = 0;
 
 char timestampstr[16];
-
-//uint8_t CR = 13; //carriage return ascii code
-//uint8_t NL = 10; //new line ascii code
 
 uint8_t display0[11] = {digit0, digit1, digit2, digit3, digit4, digit5, digit6, digit7, digit8, digit9, dummydigit};
 uint8_t display1[10] = {digit0, digit1, digit2, digit3, digit4, digit5, digit6, digit7, digit8, digit9};
@@ -70,34 +69,12 @@ uint8_t display3[10] = {digit0, digit1, digit2, digit3, digit4, digit5, digit6, 
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
- SPI_HandleTypeDef hspi2;
-SPI_HandleTypeDef hspi3;
-
-TIM_HandleTypeDef htim10;
-TIM_HandleTypeDef htim11;
-
-UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 
-GPIO_PinState is7segsel0 = GPIO_PIN_RESET;
-GPIO_PinState is7segsel1 = GPIO_PIN_RESET;
+GPIO_PinState is7segsel0;
+GPIO_PinState is7segsel1;
 
-
-//is7segsel0 = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_11);
-//is7segsel1 = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_12);
-void Write7segsel(GPIO_PinState sel1, GPIO_PinState sel0)
-{
-	if(sel0 == GPIO_PIN_SET)
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET);
-	else
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_RESET);
-
-	if(sel1 == GPIO_PIN_SET)
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_SET);
-	else
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_12, GPIO_PIN_RESET);
-}
 
 uint8_t sensorINT1_CTRLAddress = 0x0D;
 uint8_t sensorINT1_CTRLData = 0x80;
@@ -120,51 +97,10 @@ uint8_t sensorSTEP_COUNT_DELTAData = 0xFF;
 uint8_t sensorINT2_CTRLAddress = 0x0E;
 uint8_t sensorINT2_CTRLData = 0x80;
 
-void SensorInit()
-{
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-	HAL_SPI_Transmit(&hspi3, &sensorCTRL1_XLAddress, 1, -1);
-	HAL_SPI_Transmit(&hspi3, &sensorCTRL1_XLData, 1, -1);
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
-
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-	HAL_SPI_Transmit(&hspi3, &sensorCTRL10_CAddress, 1, -1);
-	HAL_SPI_Transmit(&hspi3, &sensorCTRL10_CData, 1, -1);
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
-
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-	HAL_SPI_Transmit(&hspi3, &sensorTAPCFGAddress, 1, -1);
-	HAL_SPI_Transmit(&hspi3, &sensorTAPCFGData, 1, -1);
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
-
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-	HAL_SPI_Transmit(&hspi3, &sensorINT1_CTRLAddress, 1, -1);
-	HAL_SPI_Transmit(&hspi3, &sensorINT1_CTRLData, 1, -1);
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
-
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-	HAL_SPI_Transmit(&hspi3, &sensorSTEP_COUNT_DELTAAddress, 1, -1);
-	HAL_SPI_Transmit(&hspi3, &sensorSTEP_COUNT_DELTAData, 1, -1);
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
-
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-	HAL_SPI_Transmit(&hspi3, &sensorINT2_CTRLAddress, 1, -1);
-	HAL_SPI_Transmit(&hspi3, &sensorINT2_CTRLData, 1, -1);
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
-
-
-}
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-static void MX_GPIO_Init(void);
-static void MX_SPI2_Init(void);
-static void MX_USART2_UART_Init(void);
-static void MX_SPI3_Init(void);
-static void MX_TIM10_Init(void);
-static void MX_TIM11_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -213,11 +149,12 @@ int main(void)
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
   SensorInit();
 
-  //LE engedelyezes
- 		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+  //Enable the 7seg displays (we always want to see the steps on it)
+  //Shift register LE
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
 
- 		  //OE engedelyezes
- 		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_RESET);
+  //Shift register OE
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_9, GPIO_PIN_RESET);
 
   /* USER CODE END 2 */
 
@@ -225,7 +162,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
+	  //We implemented everything in interrupts
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -280,382 +217,8 @@ void SystemClock_Config(void)
   }
 }
 
-/**
-  * @brief SPI2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_SPI2_Init(void)
-{
-
-  /* USER CODE BEGIN SPI2_Init 0 */
-
-  /* USER CODE END SPI2_Init 0 */
-
-  /* USER CODE BEGIN SPI2_Init 1 */
-
-  /* USER CODE END SPI2_Init 1 */
-  /* SPI2 parameter configuration*/
-  hspi2.Instance = SPI2;
-  hspi2.Init.Mode = SPI_MODE_MASTER;
-  hspi2.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi2.Init.DataSize = SPI_DATASIZE_8BIT;
-  hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
-  hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
-  hspi2.Init.NSS = SPI_NSS_SOFT;
-  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
-  hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
-  hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
-  hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
-  hspi2.Init.CRCPolynomial = 10;
-  if (HAL_SPI_Init(&hspi2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN SPI2_Init 2 */
-
-  /* USER CODE END SPI2_Init 2 */
-
-}
-
-/**
-  * @brief SPI3 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_SPI3_Init(void)
-{
-
-  /* USER CODE BEGIN SPI3_Init 0 */
-
-  /* USER CODE END SPI3_Init 0 */
-
-  /* USER CODE BEGIN SPI3_Init 1 */
-
-  /* USER CODE END SPI3_Init 1 */
-  /* SPI3 parameter configuration*/
-  hspi3.Instance = SPI3;
-  hspi3.Init.Mode = SPI_MODE_MASTER;
-  hspi3.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi3.Init.DataSize = SPI_DATASIZE_8BIT;
-  hspi3.Init.CLKPolarity = SPI_POLARITY_LOW;
-  hspi3.Init.CLKPhase = SPI_PHASE_1EDGE;
-  hspi3.Init.NSS = SPI_NSS_SOFT;
-  hspi3.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
-  hspi3.Init.FirstBit = SPI_FIRSTBIT_MSB;
-  hspi3.Init.TIMode = SPI_TIMODE_DISABLE;
-  hspi3.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
-  hspi3.Init.CRCPolynomial = 10;
-  if (HAL_SPI_Init(&hspi3) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN SPI3_Init 2 */
-
-  /* USER CODE END SPI3_Init 2 */
-
-}
-
-/**
-  * @brief TIM10 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_TIM10_Init(void)
-{
-
-  /* USER CODE BEGIN TIM10_Init 0 */
-
-  /* USER CODE END TIM10_Init 0 */
-
-  /* USER CODE BEGIN TIM10_Init 1 */
-
-  /* USER CODE END TIM10_Init 1 */
-  htim10.Instance = TIM10;
-  htim10.Init.Prescaler = 8000 - 1;
-  htim10.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim10.Init.Period = 10 - 1;
-  htim10.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim10.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_Base_Init(&htim10) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN TIM10_Init 2 */
-
-  /* USER CODE END TIM10_Init 2 */
-
-}
-
-/**
-  * @brief TIM11 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_TIM11_Init(void)
-{
-
-  /* USER CODE BEGIN TIM11_Init 0 */
-
-  /* USER CODE END TIM11_Init 0 */
-
-  /* USER CODE BEGIN TIM11_Init 1 */
-
-  /* USER CODE END TIM11_Init 1 */
-  htim11.Instance = TIM11;
-  htim11.Init.Prescaler = 8000 - 1;
-  htim11.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim11.Init.Period = 10000 - 1;
-  htim11.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim11.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_Base_Init(&htim11) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN TIM11_Init 2 */
-
-  /* USER CODE END TIM11_Init 2 */
-
-}
-
-/**
-  * @brief USART2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_USART2_UART_Init(void)
-{
-
-  /* USER CODE BEGIN USART2_Init 0 */
-
-  /* USER CODE END USART2_Init 0 */
-
-  /* USER CODE BEGIN USART2_Init 1 */
-
-  /* USER CODE END USART2_Init 1 */
-  huart2.Instance = USART2;
-  huart2.Init.BaudRate = 115200;
-  huart2.Init.WordLength = UART_WORDLENGTH_8B;
-  huart2.Init.StopBits = UART_STOPBITS_1;
-  huart2.Init.Parity = UART_PARITY_NONE;
-  huart2.Init.Mode = UART_MODE_TX_RX;
-  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
-  if (HAL_UART_Init(&huart2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN USART2_Init 2 */
-
-  /* USER CODE END USART2_Init 2 */
-
-}
-
-/**
-  * @brief GPIO Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_GPIO_Init(void)
-{
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
-
-  /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOC_CLK_ENABLE();
-  __HAL_RCC_GPIOH_CLK_ENABLE();
-  __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, LD2_Pin|GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8|GPIO_PIN_9, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin : B1_Pin */
-  GPIO_InitStruct.Pin = B1_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : LD2_Pin PA10 PA11 PA12 */
-  GPIO_InitStruct.Pin = LD2_Pin|GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PA6 */
-  GPIO_InitStruct.Pin = GPIO_PIN_6;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PA7 */
-  GPIO_InitStruct.Pin = GPIO_PIN_7;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : PC8 PC9 */
-  GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : PA8 PA9 */
-  GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
-
-}
-
 /* USER CODE BEGIN 4 */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-	if(htim == &htim10)
-	{
-		if(is7segsel1 == GPIO_PIN_RESET && is7segsel0 == GPIO_PIN_RESET)
-			{
-				Write7segsel(GPIO_PIN_RESET, GPIO_PIN_SET);
 
-				HAL_SPI_Transmit(&hspi2, &display2[digitindex2], 1, 0);
-			}
-
-			if(is7segsel1 == GPIO_PIN_RESET && is7segsel0 == GPIO_PIN_SET)
-			{
-				Write7segsel(GPIO_PIN_SET, GPIO_PIN_RESET);
-
-				HAL_SPI_Transmit(&hspi2, &display1[digitindex1], 1, 0);
-			}
-
-			if(is7segsel1 == GPIO_PIN_SET && is7segsel0 == GPIO_PIN_RESET)
-			{
-				Write7segsel(GPIO_PIN_SET, GPIO_PIN_SET);
-
-				HAL_SPI_Transmit(&hspi2, &display0[digitindex0], 1, 0);
-			}
-
-			if(is7segsel1 == GPIO_PIN_SET && is7segsel0 == GPIO_PIN_SET)
-			{
-				Write7segsel(GPIO_PIN_RESET, GPIO_PIN_RESET);
-
-				HAL_SPI_Transmit(&hspi2, &display3[digitindex3], 1, 0);
-			}
-
-
-			is7segsel0 = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_11);
-			is7segsel1 = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_12);
-		//LED villogtatás
-		//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-		if(digitindex0 == 10)
-		{
-			digitindex0 = 0;
-
-			if(digitindex1 != 9)
-			{
-				digitindex1++;
-			}
-			else
-			{
-				digitindex1 = 0;
-
-				if(digitindex2 != 9)
-				{
-					digitindex2++;
-				}
-				else
-				{
-					digitindex2 = 0;
-
-					if(digitindex3 != 9)
-					{
-						digitindex3++;
-					}
-					else
-					{
-						digitindex0 = 0;
-						digitindex1 = 0;
-						digitindex2 = 0;
-						digitindex3 = 0;
-					}
-				}
-			}
-		}
-	}
-
-	if(htim == &htim11)
-		{
-			time++;
-		}
-
-}
-
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{
-	if(GPIO_Pin == GPIO_PIN_9)
-	{
-		//increasing the step counter
-		digitindex0++;
-
-		steptimes[steptimesindex] = time;
-
-
-	//getting the timestamp of the step from the sensor
-	//in the timestamp register 1 LSB means 6.4 ms
-	//first we get the lower byte of the timestamp
-	//we have to tell the sensor that we want to read the STEP_TIMESTAMP_L (49h) register
-		//HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-		//HAL_SPI_Transmit(&hspi3, &sensorSTEP_TIMESTAMP_LAddress, 1, 0);
-		//HAL_SPI_Receive(&hspi3, &steptimesL[steptimesindex], 1, 0);
-		//HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
-
-	//then we get the higher byte just the same as previously
-		//HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-		//HAL_SPI_Transmit(&hspi3, &sensorSTEP_TIMESTAMP_HAddress, 1, 0);
-		//HAL_SPI_Receive(&hspi3, &steptimesH[steptimesindex], 1, 0);
-		//HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
-
-	//now we put the lower and higher byte into one 16 byte variable
-		//steptimes[steptimesindex] = steptimesL[steptimesindex];
-		//uint16_t temptimeL = steptimesL[steptimesindex] | 0x0000;
-		//uint16_t temptimeH = steptimesH[steptimesindex] << 8;
-		//steptimes[steptimesindex] = temptimeH | temptimeL;
-
-	//and at last, we multiply the number with 6.4 because 1 LSB means 6.4 ms
-		//steptimes[steptimesindex] = (6 * steptimes[steptimesindex]) / 1000;
-		//steptimes[steptimesindex] = 6 * steptimes[steptimesindex];
-
-		//usarttemp = steptimes[steptimesindex] / 1000;
-
-		//test after some calculations bases on experiments
-		//steptimes[steptimesindex] = (steptimes[steptimesindex]) / 9;
-
-		sprintf(timestampstr, "%d\r\n", time);
-
-
-		HAL_UART_Transmit(&huart2, (uint8_t*) timestampstr, strlen(timestampstr), -1);
-		//HAL_UART_Transmit(&huart2, &CR, 1, 0); //carriage return on the terminal
-		//HAL_UART_Transmit(&huart2, &NL, 1, 0); //new line on the terminal
-
-		//of course we have to increment the index
-		steptimesindex++;
-	}
-
-	if(GPIO_Pin == GPIO_PIN_7)
-	{
-		digitindex0 = 0;
-		digitindex1 = 0;
-		digitindex2 = 0;
-		digitindex3 = 0;
-	}
-}
 /* USER CODE END 4 */
 
 /**
