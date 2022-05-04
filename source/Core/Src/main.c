@@ -40,6 +40,8 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
+
+//Variables for the 7 segment numbers
 const uint8_t digit0 = 0x3F;
 const uint8_t digit1 = 0x06;
 const uint8_t digit2 = 0x5B;
@@ -51,49 +53,66 @@ const uint8_t digit7 = 0x07;
 const uint8_t digit8 = 0x7F;
 const uint8_t digit9 = 0x6F;
 const uint8_t dummydigit = 0x00;
+
+//Index variables for the 7 segment numbers
 int digitindex0 = 0;
 int digitindex1 = 0;
 int digitindex2 = 0;
 int digitindex3 = 0;
-uint16_t steptimes [9999];
-uint16_t steptimesindex = 0;
 
-uint16_t time = 0;
-
-char timestampstr[16];
-
+//Arrays for the 7 segment numbers
 uint8_t display0[11] = {digit0, digit1, digit2, digit3, digit4, digit5, digit6, digit7, digit8, digit9, dummydigit};
 uint8_t display1[10] = {digit0, digit1, digit2, digit3, digit4, digit5, digit6, digit7, digit8, digit9};
 uint8_t display2[10] = {digit0, digit1, digit2, digit3, digit4, digit5, digit6, digit7, digit8, digit9};
 uint8_t display3[10] = {digit0, digit1, digit2, digit3, digit4, digit5, digit6, digit7, digit8, digit9};
+
+//We store the timestamps of the steps in steptimes ("only" 9999 becaues we only have 4 displays) and the index for it
+uint16_t steptimes [9999];
+uint16_t steptimesindex = 0;
+
+//We save the timestamp into steptimes[steptimesindex] from this variable
+//The tim11 timer increments this every 1 sec
+uint16_t time = 0;
+
+//String buffer for the USART communication
+char timestampstr[16];
+
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
 
+//Selection variables for the 4 displays
 GPIO_PinState is7segsel0;
 GPIO_PinState is7segsel1;
 
-
+//Sensor register addresses and the required bits to write in them to work properly
+//Pedometer step recognition interrupt enable on INT1 pad
 uint8_t sensorINT1_CTRLAddress = 0x0D;
 uint8_t sensorINT1_CTRLData = 0x80;
 
+//Interrupts enable
 uint8_t sensorTAPCFGAddress = 0x58;
-uint8_t sensorTAPCFGData = 0xC0;
+uint8_t sensorTAPCFGData = 0x80;
 
+//Timer enable, pedometer algorithm enable,tilt calculation enable and global enable bit for these functions
 uint8_t sensorCTRL10_CAddress = 0x19;
 uint8_t sensorCTRL10_CData = 0x3C;
 
+//Performance configuration register
 uint8_t sensorCTRL1_XLAddress = 0x10;
 uint8_t sensorCTRL1_XLData = 0x20;
 
+//Step timestamp lower and higher byte addresses
 uint8_t sensorSTEP_TIMESTAMP_LAddress = 0xC9;
 uint8_t sensorSTEP_TIMESTAMP_HAddress = 0xCA;
 
+//Time period register for step detection on delta time
 uint8_t sensorSTEP_COUNT_DELTAAddress = 0x15;
 uint8_t sensorSTEP_COUNT_DELTAData = 0xFF;
 
+//Step recognition interrupt on delta time on INT2 pad
 uint8_t sensorINT2_CTRLAddress = 0x0E;
 uint8_t sensorINT2_CTRLData = 0x80;
 
@@ -143,10 +162,15 @@ int main(void)
   MX_TIM10_Init();
   MX_TIM11_Init();
   /* USER CODE BEGIN 2 */
+
+  //Starting the timers with interrupts
   HAL_TIM_Base_Start_IT(&htim10);
   HAL_TIM_Base_Start_IT(&htim11);
 
+  //Disabling the CS for the sensor
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
+
+  //Initializing the sensor
   SensorInit();
 
   //Enable the 7seg displays (we always want to see the steps on it)

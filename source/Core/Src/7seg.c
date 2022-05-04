@@ -1,5 +1,6 @@
 #include "7seg.h"
 
+//Function to write a specific digit on the display
 void Write7segsel(GPIO_PinState sel1, GPIO_PinState sel0)
 {
 	if(sel0 == GPIO_PIN_SET)

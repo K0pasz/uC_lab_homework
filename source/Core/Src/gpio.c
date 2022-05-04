@@ -113,32 +113,41 @@ void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 2 */
+//Callback for the EXTI ITs
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
+	//If the sensor detects a step, it gives us an IT
+	//Here we increase the step counter, save the timestamp and send it on USART to the PC
 	if(GPIO_Pin == GPIO_PIN_9)
 	{
 		//increasing the step counter
 		digitindex0++;
 
+		//saving the timestamp
 		steptimes[steptimesindex] = time;
 
+		//putting the time into a string
 		sprintf(timestampstr, "%d\r\n", time);
 
-
+		//sending it out on USART
 		HAL_UART_Transmit(&huart2, (uint8_t*) timestampstr, strlen(timestampstr), -1);
-		//HAL_UART_Transmit(&huart2, &CR, 1, 0); //carriage return on the terminal
-		//HAL_UART_Transmit(&huart2, &NL, 1, 0); //new line on the terminal
 
-		//of course we have to increment the index
+		//of course, at last, we have to increment the index
 		steptimesindex++;
 	}
 
+	//If we push the button we have to zero the steps and the timestamps
 	if(GPIO_Pin == GPIO_PIN_7)
 	{
 		digitindex0 = 0;
 		digitindex1 = 0;
 		digitindex2 = 0;
 		digitindex3 = 0;
+
+		for(int i = 0; i<10000; i++)
+		{
+			steptimes[i] = 0;
+		}
 	}
 }
 /* USER CODE END 2 */

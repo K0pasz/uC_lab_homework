@@ -22,6 +22,7 @@
 
 /* USER CODE BEGIN 0 */
 #include "spi.h"
+#include "7seg.h"
 
 extern int digitindex0;
 extern int digitindex1;
@@ -164,10 +165,15 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
 }
 
 /* USER CODE BEGIN 1 */
+//Callback for the timer interrupts
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
+	//1 kHz interrupt to shift between the 4 display and send the numbers to them
+	//With this frequency we see the displays as if all of them are lit at the same time
+	//(of course just one is lit at a time)
 	if(htim == &htim10)
 	{
+		//Shifting between the displays and writing out the data
 		if(is7segsel1 == GPIO_PIN_RESET && is7segsel0 == GPIO_PIN_RESET)
 			{
 				Write7segsel(GPIO_PIN_RESET, GPIO_PIN_SET);
@@ -199,8 +205,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 			is7segsel0 = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_11);
 			is7segsel1 = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_12);
-		//LED villogtatás
-		//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+
+		//Checking if a specific digit reaches the maximum value (9)
+		//If a digit reaches 9, then it has to become 0 at the next incrementation and we must increment the higher one
 		if(digitindex0 == 10)
 		{
 			digitindex0 = 0;
@@ -237,6 +244,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		}
 	}
 
+	//The tim11 generates an interrupt every 1 second, here we just increment the time variable
+	//If the sensor detects a step we save the value of this time variable into the detected step's timestamp
 	if(htim == &htim11)
 		{
 			time++;

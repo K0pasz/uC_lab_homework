@@ -1,6 +1,7 @@
 #include "sensor.h"
 
-
+//Function to initialize the sensor
+//We write the specific bits to the required registers
 void SensorInit()
 {
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
