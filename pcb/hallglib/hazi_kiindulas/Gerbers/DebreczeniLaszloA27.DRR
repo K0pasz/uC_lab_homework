@@ -1,9 +1,10 @@
 ----------------------------------------------------------------------------------------------------------------------------------
-NCDrill File Report For: hazi_kiindulas.PcbDoc   2022. 04. 30.  11:35:46
+NCDrill File Report For: hazi_kiindulas.PcbDoc   2022. 05. 04.  22:53:37
 ----------------------------------------------------------------------------------------------------------------------------------
 
 Layer Pair : Top Layer to Bottom Layer
 ASCII RoundHoles File : DebreczeniLaszloA27.TXT
+EIA File   : DebreczeniLaszloA27.DRL
 
 Tool       Hole Size               Hole Tolerance               Hole Type       Hole Count   Plated         Tool Travel
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -15,4 +16,4 @@ T5      138mil (3.5mm)                                            Round         
 ----------------------------------------------------------------------------------------------------------------------------------
 Totals                                                                              196
 
-Total Processing Time (hh:mm:ss) : 00:00:00
+Total Processing Time (hh:mm:ss) : 00:00:01

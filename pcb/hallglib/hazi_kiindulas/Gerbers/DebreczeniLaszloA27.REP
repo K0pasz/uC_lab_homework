@@ -2,13 +2,73 @@
 FileName = DebreczeniLaszloA27.GBR
 AutoAperture = True
 *************************************************************
-Generating : Mechanical 1
-      File : DebreczeniLaszloA27.GM1
+Generating : Top Layer
+      File : DebreczeniLaszloA27.GTL
 
-    Adding Layer      : Mechanical 1
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
 
 
 Used DCodes :
+    D12
+    D34
+    D35
+    D36
+    D37
+    D38
+    D39
+    D40
+    D41
+    D42
+    D43
+    D44
+    D45
+    D46
+    D47
+    D48
+    D49
+    D50
+    D51
+    D52
+    D53
+    D54
+*************************************************************
+
+*************************************************************
+Generating : Bottom Layer
+      File : DebreczeniLaszloA27.GBL
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D12
+    D46
+    D47
+    D48
+    D49
+    D50
+    D51
+    D52
+    D53
+    D54
+*************************************************************
+
+*************************************************************
+Generating : Top Overlay
+      File : DebreczeniLaszloA27.GTO
+
+    Adding Layer      : Top Overlay
+
+
+Used DCodes :
+    D10
+    D11
+    D12
+    D13
 *************************************************************
 
 *************************************************************
@@ -24,26 +84,13 @@ Used DCodes :
 *************************************************************
 
 *************************************************************
-Generating : Bottom Solder
-      File : DebreczeniLaszloA27.GBS
+Generating : Mechanical 1
+      File : DebreczeniLaszloA27.GM1
 
-    Adding Layer      : Bottom Solder
-
-    Adding Layer      : Bottom Layer
-
-    Adding Layer      : Multi-Layer
+    Adding Layer      : Mechanical 1
 
 
 Used DCodes :
-    D25
-    D26
-    D27
-    D28
-    D29
-    D30
-    D31
-    D32
-    D33
 *************************************************************
 
 *************************************************************
@@ -82,22 +129,10 @@ Used DCodes :
 *************************************************************
 
 *************************************************************
-Generating : Top Overlay
-      File : DebreczeniLaszloA27.GTO
+Generating : Bottom Solder
+      File : DebreczeniLaszloA27.GBS
 
-    Adding Layer      : Top Overlay
-
-
-Used DCodes :
-    D10
-    D11
-    D12
-    D13
-*************************************************************
-
-*************************************************************
-Generating : Bottom Layer
-      File : DebreczeniLaszloA27.GBL
+    Adding Layer      : Bottom Solder
 
     Adding Layer      : Bottom Layer
 
@@ -105,49 +140,14 @@ Generating : Bottom Layer
 
 
 Used DCodes :
-    D12
-    D46
-    D47
-    D48
-    D49
-    D50
-    D51
-    D52
-    D53
-    D54
-*************************************************************
-
-*************************************************************
-Generating : Top Layer
-      File : DebreczeniLaszloA27.GTL
-
-    Adding Layer      : Top Layer
-
-    Adding Layer      : Multi-Layer
-
-
-Used DCodes :
-    D12
-    D34
-    D35
-    D36
-    D37
-    D38
-    D39
-    D40
-    D41
-    D42
-    D43
-    D44
-    D45
-    D46
-    D47
-    D48
-    D49
-    D50
-    D51
-    D52
-    D53
-    D54
+    D25
+    D26
+    D27
+    D28
+    D29
+    D30
+    D31
+    D32
+    D33
 *************************************************************
 

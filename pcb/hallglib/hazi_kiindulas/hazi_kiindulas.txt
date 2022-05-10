@@ -1,0 +1,10 @@
+Board Information Report
+Filename     : E:\uclab_hf\pcb\hallglib\hazi_kiindulas\hazi_kiindulas.PcbDoc
+Date         : 2022. 05. 09.
+Time         : 14:43:07
+Time Elapsed : 00:00:00
+
+General
+    Board Size, 3628.741milsx2378.74mils
+    Components on board, 33
+count : 2

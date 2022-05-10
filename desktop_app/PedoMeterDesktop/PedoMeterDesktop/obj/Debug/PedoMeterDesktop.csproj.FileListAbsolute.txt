@@ -1,0 +1,11 @@
+E:\uclab_hf\desktop_app\PedoMeterDesktop\PedoMeterDesktop\bin\Debug\PedoMeterDesktop.exe.config
+E:\uclab_hf\desktop_app\PedoMeterDesktop\PedoMeterDesktop\bin\Debug\PedoMeterDesktop.exe
+E:\uclab_hf\desktop_app\PedoMeterDesktop\PedoMeterDesktop\bin\Debug\PedoMeterDesktop.pdb
+E:\uclab_hf\desktop_app\PedoMeterDesktop\PedoMeterDesktop\obj\Debug\PedoMeterDesktop.csproj.AssemblyReference.cache
+E:\uclab_hf\desktop_app\PedoMeterDesktop\PedoMeterDesktop\obj\Debug\PedoMeterDesktop.csproj.SuggestedBindingRedirects.cache
+E:\uclab_hf\desktop_app\PedoMeterDesktop\PedoMeterDesktop\obj\Debug\PedoMeterDesktop.Form1.resources
+E:\uclab_hf\desktop_app\PedoMeterDesktop\PedoMeterDesktop\obj\Debug\PedoMeterDesktop.Properties.Resources.resources
+E:\uclab_hf\desktop_app\PedoMeterDesktop\PedoMeterDesktop\obj\Debug\PedoMeterDesktop.csproj.GenerateResource.cache
+E:\uclab_hf\desktop_app\PedoMeterDesktop\PedoMeterDesktop\obj\Debug\PedoMeterDesktop.csproj.CoreCompileInputs.cache
+E:\uclab_hf\desktop_app\PedoMeterDesktop\PedoMeterDesktop\obj\Debug\PedoMeterDesktop.exe
+E:\uclab_hf\desktop_app\PedoMeterDesktop\PedoMeterDesktop\obj\Debug\PedoMeterDesktop.pdb

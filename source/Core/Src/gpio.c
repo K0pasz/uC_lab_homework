@@ -42,6 +42,7 @@ extern uint16_t steptimesindex;
 extern uint16_t time;
 
 extern char timestampstr[16];
+extern char steps[32];
 /* USER CODE END 1 */
 
 /** Configure pins as
@@ -126,6 +127,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		//saving the timestamp
 		steptimes[steptimesindex] = time;
 
+		//putting the steps into a string
+		sprintf(steps, "%d ", steptimesindex+1);
+
+		//sending it out on USART
+		HAL_UART_Transmit(&huart2, (uint8_t*) steps, strlen(steps), -1);
+
 		//putting the time into a string
 		sprintf(timestampstr, "%d\r\n", time);
 
@@ -148,6 +155,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		{
 			steptimes[i] = 0;
 		}
+
+		//Optional:
+		time = 0;
 	}
 }
 /* USER CODE END 2 */

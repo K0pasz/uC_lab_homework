@@ -75,6 +75,7 @@ uint16_t steptimesindex = 0;
 uint16_t time = 0;
 
 //String buffer for the USART communication
+char steps[32];
 char timestampstr[16];
 
 /* USER CODE END PM */
