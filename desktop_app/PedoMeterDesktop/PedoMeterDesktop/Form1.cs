@@ -13,16 +13,17 @@ namespace PedoMeterDesktop
 {
     public partial class Form1 : Form
     {
-        
+        //Delegate for the Invoke() in the serialPort1_DataReceived method
         private delegate void ReceiveData(object sender, SerialDataReceivedEventArgs e);
         public Form1()
         {
             InitializeComponent();
         }
 
+        //Method to close the serial port after reading the data
+        //We will start a thread to do it to prevent a deadlock
         private void CloseSerial()
         {
-
             try
             {
                 serialPort1.DtrEnable = false;
@@ -34,10 +35,11 @@ namespace PedoMeterDesktop
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-
             }
         }
 
+        //Loading the serial ports into the combobox when the application is starting
+        //Error message shows when Nucleo isn't connected
         private void Form1_Load(object sender, EventArgs e)
         {
             try
@@ -55,6 +57,7 @@ namespace PedoMeterDesktop
 
         }
 
+        //Opening the serial port
         private void btnOpen_Click(object sender, EventArgs e)
         {
             btnOpen.Enabled = false;
@@ -71,14 +74,16 @@ namespace PedoMeterDesktop
             }
         }
 
+        //Closing the serial port
         private void btnClose_Click(object sender, EventArgs e)
         {
             btnOpen.Enabled = true;
             btnClose.Enabled = false;
-
+            
             try
-            {        
-                serialPort1.Close();
+            {
+                System.Threading.Thread CloseDown = new System.Threading.Thread(new System.Threading.ThreadStart(CloseSerial));
+                CloseDown.Start();
             }
             catch (Exception ex)
             {
@@ -86,7 +91,7 @@ namespace PedoMeterDesktop
             }
         }
 
-        
+        //Closing the serial port when exiting the app
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (serialPort1.IsOpen)
@@ -95,6 +100,7 @@ namespace PedoMeterDesktop
             }
         }
 
+        //Putting the timestamps into the listview when we send it from the Nucleo
         private void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             if (InvokeRequired)
@@ -110,11 +116,13 @@ namespace PedoMeterDesktop
                         byte[] buffer = new byte[9999];
                         int readByteCount = serialPort1.BaseStream.Read(buffer,0,serialPort1.BytesToRead);
 
-                        
+                        //Getting the buffer's data into a string   
                         string response = Encoding.UTF8.GetString(buffer);
 
+                        //Splitting the string into lines
                         var lines = response.Split('\n');
 
+                        //Reading each line and putting the timestamps into the listview
                         foreach(string line in lines)
                         {
                             ListViewItem eachRow = new ListViewItem(steps.ToString());
@@ -124,9 +132,11 @@ namespace PedoMeterDesktop
 
                             steps++;
                         }
+                        //Removing the last line because somehow the app adds one additional line
                         if(listView1.Items.Count > 0)
                             listView1.Items.RemoveAt(listView1.Items.Count - 1);
 
+                        //Locking the app to prevent the duplicated data on the screen (in the listview)
                         btnOpen.Enabled = false;
                         btnClose.Enabled = false;
 

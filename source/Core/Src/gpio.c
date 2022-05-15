@@ -155,15 +155,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		time = 0;
 	}
 
-	//If we push the upper button we send the steps and the timestamps out on USART
+	//If we push the upper button we send the timestamps out on USART
 	if(GPIO_Pin == GPIO_PIN_6)
 	{
 		for(int i = 0; i<steptimesindex; i++)
 		{
-			//Putting the steps into a string and sending it out
-			//sprintf(steps, "%d", i+1);
-			//HAL_UART_Transmit(&huart2, (uint8_t*) steps, strlen(steps), -1);
-
+			//Putting the timestamps into a string and sending it out on UART
 
 			sprintf(timestampstr, "%d\n", steptimes[i]);
 			HAL_UART_Transmit(&huart2, (uint8_t*) timestampstr, strlen(timestampstr), -1);
