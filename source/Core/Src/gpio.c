@@ -82,14 +82,8 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PA6 */
-  GPIO_InitStruct.Pin = GPIO_PIN_6;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PA7 */
-  GPIO_InitStruct.Pin = GPIO_PIN_7;
+  /*Configure GPIO pins : PA6 PA7 */
+  GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -128,22 +122,23 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		steptimes[steptimesindex] = time;
 
 		//putting the steps into a string
-		sprintf(steps, "%d ", steptimesindex+1);
+		//sprintf(steps, "%d ", steptimesindex+1);
 
 		//sending it out on USART
-		HAL_UART_Transmit(&huart2, (uint8_t*) steps, strlen(steps), -1);
+		//HAL_UART_Transmit(&huart2, (uint8_t*) steps, strlen(steps), -1);
 
 		//putting the time into a string
-		sprintf(timestampstr, "%d\r\n", time);
+//		sprintf(timestampstr, "%d\n", time);
+
 
 		//sending it out on USART
-		HAL_UART_Transmit(&huart2, (uint8_t*) timestampstr, strlen(timestampstr), -1);
+//		HAL_UART_Transmit(&huart2, (uint8_t*) timestampstr, strlen(timestampstr), -1);
 
 		//of course, at last, we have to increment the index
 		steptimesindex++;
 	}
 
-	//If we push the button we have to zero the steps and the timestamps
+	//If we push the lower button we have to zero the steps and the timestamps
 	if(GPIO_Pin == GPIO_PIN_7)
 	{
 		digitindex0 = 0;
@@ -158,6 +153,29 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
 		//Optional:
 		time = 0;
+	}
+
+	//If we push the upper button we send the steps and the timestamps out on USART
+	if(GPIO_Pin == GPIO_PIN_6)
+	{
+		for(int i = 0; i<steptimesindex; i++)
+		{
+			//Putting the steps into a string and sending it out
+			//sprintf(steps, "%d", i+1);
+			//HAL_UART_Transmit(&huart2, (uint8_t*) steps, strlen(steps), -1);
+
+
+			sprintf(timestampstr, "%d\n", steptimes[i]);
+			HAL_UART_Transmit(&huart2, (uint8_t*) timestampstr, strlen(timestampstr), -1);
+
+		}
+		//HAL_Delay(100); --> thanks to this, the Nucleo freezes...
+		//DIY Delay:
+		for(int k = 0; k < 2097151; k++)
+		{
+
+		}
+
 	}
 }
 /* USER CODE END 2 */

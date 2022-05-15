@@ -78,6 +78,7 @@ uint16_t time = 0;
 char steps[32];
 char timestampstr[16];
 
+
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/

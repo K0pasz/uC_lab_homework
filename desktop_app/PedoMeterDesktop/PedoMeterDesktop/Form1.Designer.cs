@@ -33,35 +33,37 @@
             this.comboBoxPort = new System.Windows.Forms.ComboBox();
             this.btnOpen = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
-            this.txtSteps = new System.Windows.Forms.TextBox();
-            this.btnReset = new System.Windows.Forms.Button();
-            this.labelSteps = new System.Windows.Forms.Label();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
-            this.btnReceive = new System.Windows.Forms.Button();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.columnSteps = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // labelPort
             // 
             this.labelPort.AutoSize = true;
-            this.labelPort.Location = new System.Drawing.Point(46, 42);
+            this.labelPort.Location = new System.Drawing.Point(61, 52);
+            this.labelPort.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelPort.Name = "labelPort";
-            this.labelPort.Size = new System.Drawing.Size(29, 13);
+            this.labelPort.Size = new System.Drawing.Size(34, 16);
             this.labelPort.TabIndex = 0;
             this.labelPort.Text = "Port:";
             // 
             // comboBoxPort
             // 
             this.comboBoxPort.FormattingEnabled = true;
-            this.comboBoxPort.Location = new System.Drawing.Point(81, 39);
+            this.comboBoxPort.Location = new System.Drawing.Point(108, 48);
+            this.comboBoxPort.Margin = new System.Windows.Forms.Padding(4);
             this.comboBoxPort.Name = "comboBoxPort";
-            this.comboBoxPort.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxPort.Size = new System.Drawing.Size(160, 24);
             this.comboBoxPort.TabIndex = 1;
             // 
             // btnOpen
             // 
-            this.btnOpen.Location = new System.Drawing.Point(208, 37);
+            this.btnOpen.Location = new System.Drawing.Point(277, 46);
+            this.btnOpen.Margin = new System.Windows.Forms.Padding(4);
             this.btnOpen.Name = "btnOpen";
-            this.btnOpen.Size = new System.Drawing.Size(75, 23);
+            this.btnOpen.Size = new System.Drawing.Size(100, 28);
             this.btnOpen.TabIndex = 2;
             this.btnOpen.Text = "Open";
             this.btnOpen.UseVisualStyleBackColor = true;
@@ -69,40 +71,14 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(289, 37);
+            this.btnClose.Location = new System.Drawing.Point(385, 46);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(4);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.Size = new System.Drawing.Size(100, 28);
             this.btnClose.TabIndex = 3;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // txtSteps
-            // 
-            this.txtSteps.Location = new System.Drawing.Point(81, 96);
-            this.txtSteps.Multiline = true;
-            this.txtSteps.Name = "txtSteps";
-            this.txtSteps.Size = new System.Drawing.Size(283, 74);
-            this.txtSteps.TabIndex = 4;
-            // 
-            // btnReset
-            // 
-            this.btnReset.Location = new System.Drawing.Point(289, 176);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(75, 23);
-            this.btnReset.TabIndex = 5;
-            this.btnReset.Text = "Reset";
-            this.btnReset.UseVisualStyleBackColor = true;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
-            // 
-            // labelSteps
-            // 
-            this.labelSteps.AutoSize = true;
-            this.labelSteps.Location = new System.Drawing.Point(38, 96);
-            this.labelSteps.Name = "labelSteps";
-            this.labelSteps.Size = new System.Drawing.Size(37, 13);
-            this.labelSteps.TabIndex = 6;
-            this.labelSteps.Text = "Steps:";
             // 
             // serialPort1
             // 
@@ -110,29 +86,41 @@
             this.serialPort1.PortName = "COM3";
             this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort1_DataReceived);
             // 
-            // btnReceive
+            // listView1
             // 
-            this.btnReceive.Location = new System.Drawing.Point(81, 176);
-            this.btnReceive.Name = "btnReceive";
-            this.btnReceive.Size = new System.Drawing.Size(75, 23);
-            this.btnReceive.TabIndex = 7;
-            this.btnReceive.Text = "Receive";
-            this.btnReceive.UseVisualStyleBackColor = true;
-            this.btnReceive.Click += new System.EventHandler(this.btnReceive_Click);
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnSteps,
+            this.columnTime});
+            this.listView1.HideSelection = false;
+            this.listView1.Location = new System.Drawing.Point(108, 82);
+            this.listView1.Margin = new System.Windows.Forms.Padding(4);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(377, 403);
+            this.listView1.TabIndex = 8;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // columnSteps
+            // 
+            this.columnSteps.Text = "Steps";
+            this.columnSteps.Width = 117;
+            // 
+            // columnTime
+            // 
+            this.columnTime.Text = "Time (s)";
+            this.columnTime.Width = 148;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(580, 440);
-            this.Controls.Add(this.btnReceive);
-            this.Controls.Add(this.labelSteps);
-            this.Controls.Add(this.btnReset);
-            this.Controls.Add(this.txtSteps);
+            this.ClientSize = new System.Drawing.Size(578, 510);
+            this.Controls.Add(this.listView1);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnOpen);
             this.Controls.Add(this.comboBoxPort);
             this.Controls.Add(this.labelPort);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -148,11 +136,10 @@
         private System.Windows.Forms.ComboBox comboBoxPort;
         private System.Windows.Forms.Button btnOpen;
         private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.TextBox txtSteps;
-        private System.Windows.Forms.Button btnReset;
-        private System.Windows.Forms.Label labelSteps;
         private System.IO.Ports.SerialPort serialPort1;
-        private System.Windows.Forms.Button btnReceive;
+        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ColumnHeader columnSteps;
+        private System.Windows.Forms.ColumnHeader columnTime;
     }
 }
 

@@ -13,18 +13,46 @@ namespace PedoMeterDesktop
 {
     public partial class Form1 : Form
     {
+        
         private delegate void ReceiveData(object sender, SerialDataReceivedEventArgs e);
         public Form1()
         {
             InitializeComponent();
         }
 
+        private void CloseSerial()
+        {
+
+            try
+            {
+                serialPort1.DtrEnable = false;
+                serialPort1.RtsEnable = false;
+                serialPort1.DiscardInBuffer();
+                serialPort1.DiscardOutBuffer();
+                serialPort1.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            string[] ports = SerialPort.GetPortNames();
-            comboBoxPort.Items.AddRange(ports);
-            comboBoxPort.SelectedIndex = 0;
-            btnClose.Enabled = false;
+            try
+            {
+                string[] ports = SerialPort.GetPortNames();
+                comboBoxPort.Items.AddRange(ports);
+                comboBoxPort.SelectedIndex = 0;
+                btnClose.Enabled = false;
+            }
+            catch
+            {
+                MessageBox.Show("There are no available communication ports.\nPlease connect the pedometer to the PC via USB cable! :)", "Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+            }
+
         }
 
         private void btnOpen_Click(object sender, EventArgs e)
@@ -36,21 +64,6 @@ namespace PedoMeterDesktop
             {
                 serialPort1.PortName = comboBoxPort.Text;
                 serialPort1.Open();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnReset_Click(object sender, EventArgs e)
-        {
-            try
-            {
-               if(serialPort1.IsOpen)
-                {
-                    serialPort1.WriteLine("0\n" + Environment.NewLine);
-                }
             }
             catch (Exception ex)
             {
@@ -73,21 +86,7 @@ namespace PedoMeterDesktop
             }
         }
 
-        private void btnReceive_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (serialPort1.IsOpen)
-                {
-                    txtSteps.Text = serialPort1.ReadExisting();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
+        
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (serialPort1.IsOpen)
@@ -106,7 +105,36 @@ namespace PedoMeterDesktop
                 {
                     if (serialPort1.IsOpen)
                     {
-                        txtSteps.Text = serialPort1.ReadExisting();
+                        int steps = 1;
+                        //Read buffer
+                        byte[] buffer = new byte[9999];
+                        int readByteCount = serialPort1.BaseStream.Read(buffer,0,serialPort1.BytesToRead);
+
+                        
+                        string response = Encoding.UTF8.GetString(buffer);
+
+                        var lines = response.Split('\n');
+
+                        foreach(string line in lines)
+                        {
+                            ListViewItem eachRow = new ListViewItem(steps.ToString());
+                            ListViewItem.ListViewSubItem time = new ListViewItem.ListViewSubItem(eachRow, line);
+                            eachRow.SubItems.Add(time);
+                            listView1.Items.Add(eachRow);
+
+                            steps++;
+                        }
+                        if(listView1.Items.Count > 0)
+                            listView1.Items.RemoveAt(listView1.Items.Count - 1);
+
+                        btnOpen.Enabled = false;
+                        btnClose.Enabled = false;
+
+                        System.Threading.Thread CloseDown = new System.Threading.Thread(new System.Threading.ThreadStart(CloseSerial));
+                        CloseDown.Start();
+                        return;
+                        
+
                     }
                 }
                 catch (Exception ex)
